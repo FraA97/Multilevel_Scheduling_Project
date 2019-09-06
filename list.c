@@ -9,53 +9,66 @@ ListHead* List_init(){
 	return list;
 }
 
+ListElem* List_find(ListHead* list, ListElem* elem){
+	ListElem* aux = list->head;
+	while(aux){
+    	if (aux==elem)
+      		return elem;
+    	aux=aux->next;
+  	}
+  	return NULL;
+}
+
+ListElem* detach(ListHead* list, ListElem* elem){
+	if(List_find(list,elem) == NULL)
+		return NULL;
+	ListElem* prev = elem->prev;
+	ListElem* next = elem->next;
+	if(prev){
+		prev->next = next;
+	}
+	if(next){
+		next->prev = prev;
+	}
+	if(list->head == elem)
+		list->head == next;
+	else if(list->tail == elem)
+		list->tail == prev;
+	return elem;
+}
+
 ListElem* pop(ListHead* list){
-	ListElem* res = list->head;
-	list->head = res->next;
-	list->head->prev = NULL;
-	list->lenght--;
-	res->next = NULL;
-	return res; 
+	detach(list,list->head);
 }
 
 int pushFront(ListHead* list, ListElem* elem){
-	if (elem->next != NULL){
-		printf("impossibile inserire un elemento che già si trova in un'altra lista");
-		return -1;
+	ListElem* head = list->head;
+	if(head == NULL){
+		list->head = elem;
+		list->tail = elem;
+		return 1;
 	}
 	elem->next = list->head;
-	list->head->prev = elem;
+	head->prev = elem;
 	list->head = elem;
 	list->lenght ++;
 	return 1;
 }
 
 int pushBack(ListHead* list, ListElem* elem){
-	if (elem->next != NULL){
-		printf("impossibile inserire un elemento che già si trova in un'altra lista");
-		return -1;
+	ListElem* tail = list->tail;
+	if(tail == NULL){
+		list->head = elem;
+		list->tail = elem;
+		return 1;
 	}
-	list->tail->next = elem;
-	elem->prev = list->tail;
+	tail->next = elem;
+	elem->prev = tail;
 	list->tail = elem;
 	list->lenght ++;
 	return 1;
 }
 
 int isEmpty(ListHead* list){
-	return list-lenght!=0;
-}
-
-ListElem* detach(ListHead* list, ListElem* elem){
-	ListElem* current = list->head;
-	for(int i=0; i< list->lenght; i++){
-		if(current == elem){
-			elem->prev->next = elem->next;
-			elem->next->prev = elem->prev;
-			elem->next = NULL;
-			elem->prev = NULL;
-			return elem;
-		}
-	}
-	return NULL;
+	return list->lenght!=0;
 }
