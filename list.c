@@ -22,23 +22,35 @@ ListElem* List_find(ListHead* list, ListElem* elem){
 ListElem* detach(ListHead* list, ListElem* elem){
 	if(List_find(list,elem) == NULL)
 		return NULL;
+	if(list->head == elem){
+		return pop(list);
+
+	}
 	ListElem* prev = elem->prev;
 	ListElem* next = elem->next;
-	if(prev){
+	
+	if(prev ){
 		prev->next = next;
 	}
-	if(next){
+	if(next ){
 		next->prev = prev;
 	}
-	if(list->head == elem)
-		list->head == next;
+
+
+
 	else if(list->tail == elem)
 		list->tail == prev;
+	list->lenght --;
+	elem->next = elem->prev = NULL;
 	return elem;
 }
 
 ListElem* pop(ListHead* list){
-	detach(list,list->head);
+	ListElem * e = list->head;
+	list->head =  e->next;
+	e->next = NULL;
+	list->lenght --;
+	return e;
 }
 
 int pushFront(ListHead* list, ListElem* elem){
