@@ -30,10 +30,13 @@ void PCB_print(PCB* pcb, FILE* f){
 
 void PCB_list_print(ListHead* list, FILE* f){
 	PCB* p = (PCB*)list->head;
-	while(p!=NULL){
+	for(int i=0;i < list->lenght; i++){
 		PCB_print_info(p,f);
-		p = (PCB*)p->list.next;
 		fprintf(f, "\n");
+		p = (PCB*)p->list.next;
+		if(p==NULL)
+			return;
+		
 	}
 }
 
@@ -49,9 +52,11 @@ void Event_print(Event* e,FILE* f){
 
 void Event_list_print(ListHead* list,FILE* f){
 	Event * e = (Event*) list->head;
-	while(e!= NULL){
+	for(int i=0; i < list->lenght; ++i) {
 		Event_print(e,f);
-		e = (Event*)e->list.next;
 		fprintf(f, "\n");
+		e = (Event*)e->list.next;
+		if(e == NULL)
+			return;
 	}
 }
