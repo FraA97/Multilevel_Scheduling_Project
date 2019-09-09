@@ -49,6 +49,7 @@ ListElem* pop(ListHead* list){
 	ListElem * e = list->head;
 	list->head =  e->next;
 	e->next = NULL;
+	e->prev = NULL;
 	list->lenght --;
 	return e;
 }
