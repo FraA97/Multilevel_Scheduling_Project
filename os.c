@@ -28,7 +28,7 @@ OS* OS_init(int argc, char ** argv,FILE* f){
 int OS_step(OS* os,FILE * f){
 	fprintf(f,"************************************************************************************\n");
 	fprintf(f,"STEP: %d \n",os->step);
-	OS_print_info( os,f); //TODO
+	OS_print_info( os,f); 
 
 	os->step ++;
 	//check end
@@ -90,6 +90,43 @@ int OS_step(OS* os,FILE * f){
 }
 
 
+void OS_print_info(OS* os,FILE*f){
+	//print running
+	if(os->running == NULL)
+		fprintf(f,"NO PROCESS RUNNING\n");
+	else{
+		fprintf(f,"RUNNING:\n");
+		PCB_print_info(os->running, f);
+		fprintf(f,"q: %d\n",os->q);
+	}
+
+	//print waiting
+	for(int i=0; i<4; i++){
+		if(!isEmpty(os->waiting[i])){
+			fprintf(f, "WAITING %d\n",i );
+			PCB_list_print_info(os->waiting[i],f);
+		}
+		else
+			fprintf(f,"NO PROCESS IN WAITING LIST %d\n",i);
+	}
+	//print IO
+	if(!isEmpty(os->IO)){
+		fprintf(f, "IO:\n" );
+		PCB_list_print_info(os->IO,f);
+	}
+	else
+		fprintf(f,"NO PROCESS IN IO LIST \n");
+
+	//print toArrive
+	if(!isEmpty(os->toArrive)){
+		fprintf(f,"YET TO ARRIVE:\n");
+		PCB_list_print_info(os->toArrive,f);
+	}
+	else
+		fprintf(f,"ALL PROCESSES HAVE ARRIVED \n");
+}
+
+
 int check_end(OS* os){
 	if(os->step <= 1)
 		return 0;
@@ -101,4 +138,17 @@ int check_end(OS* os){
 	if(os->IO->lenght > 0) return 0;
 	if(os->toArrive->lenght > 0) return 0;
 	return 1;
+}
+
+int get_next_running(OS*os){
+	for(int i = 0; i<4; i++){
+		if(!isEmpty(os->waiting[i])){
+			PCB* next = (PCB*)pop(os->waiting[i]);
+			next->in_status == 0;
+			os->q = max_waiting[i];
+			os->running = next;
+			return 1;
+		}
+	}
+	return 0;
 }
