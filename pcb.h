@@ -23,7 +23,7 @@ typedef struct pcb{
 PCB* PCB_init();
 Event* Event_create(Resource r, int d);
 //TODO: una funzione che crea un pcb da un filename
-void PCB_print(PCB* pcb, FILE* f);
+void PCB_print_info(PCB* pcb, FILE* f);
 void PCB_list_print(ListHead* list, FILE* f);
 void Event_print(Event* e,FILE* f);
 void Event_list_print(ListHead* list,FILE* f);

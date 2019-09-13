@@ -15,7 +15,7 @@ Event * Event_create(Resource r, int d){
 }
 
 
-void PCB_print(PCB* pcb, FILE* f){
+void PCB_print_info(PCB* pcb, FILE* f){
 	fprintf(f,"pid: %d\n",pcb->pid);
 	fprintf(f,"arrival_time: %d\n",pcb->arrival_time);
 	fprintf(f,"priority_level: %d\n",pcb->priority_level);
