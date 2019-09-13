@@ -83,5 +83,5 @@ int pushBack(ListHead* list, ListElem* elem){
 }
 
 int isEmpty(ListHead* list){
-	return list->lenght!=0;
+	return list->lenght==0;
 }

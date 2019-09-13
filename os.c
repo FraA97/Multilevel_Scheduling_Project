@@ -140,6 +140,78 @@ int check_end(OS* os){
 	return 1;
 }
 
+void io(OS* os){
+	if(!isEmpty(os->IO)){
+		printf("io\n");
+		PCB* aux = (PCB*)os->IO->head;
+		PCB* next = (PCB*) aux->list.next;
+		while(aux){
+			printf("%d in IO for %d\n",aux->pid,aux->in_status);
+			Event * e = (Event*)aux->events->head;
+			Event_print(e,stdout);
+			if(aux->in_status == e->duration){ //if its burst has ended
+				printf("proces %d has ended its io burst\n",aux->pid);
+				e = (Event*)pop(aux->events);
+				Event_free(e);
+
+				if(!isEmpty(aux->events)){ //the process still has some bursts to be done
+					PCB* toWaiting = (PCB*) detach(os->IO,(ListElem*) aux);
+					insert_waiting(os, toWaiting);
+
+				}
+
+				else{  //the process is ended
+					PCB* ended = (PCB*) detach(os->IO, (ListElem*)aux);
+					printf("process %d has ended\n",ended->pid);
+					PCB_free(ended);				
+				}
+
+			}
+
+			aux->in_status++;
+			aux = next;
+			if(aux == NULL)
+				return;
+			next =(PCB*) next->list.next;
+		}
+
+	}
+}
+
+
+void waiting(OS* os){
+
+	for(int i=1; i<4; i++){ //for each waiting line
+
+		if(!isEmpty(os->waiting[i])){
+			printf("checking waiting %d\n",i );
+			PCB* aux = (PCB*)os->waiting[i]->head; 
+			PCB* next = (PCB*)aux->list.next;
+			while(aux){ //for each process in the specific waiting line
+
+				if(aux->in_status == max_waiting[i]) { //if the process has been in the waiting queue for to long
+					printf("to much waiting for process %d in waiting %d",aux->pid,i);
+					PCB* toAdvance = aux;
+					toAdvance = (PCB*)detach(os->waiting[i],(ListElem*)toAdvance);
+					toAdvance->in_status = 0;
+					toAdvance->priority_level --; //we change the process priority to take it to a higher priority queue
+					insert_waiting(os, toAdvance);
+				}
+				else{//process is ok in its waiting line
+					aux->in_status ++;
+					printf("process %d in waiting %d for %d\n",aux->pid,i,aux->in_status);
+				}
+
+				aux = next;
+				if(aux == NULL)
+					return;
+				next = (PCB*) next->list.next;
+			}
+		}
+	}
+}
+
+
 int get_next_running(OS*os){
 	for(int i = 0; i<4; i++){
 		if(!isEmpty(os->waiting[i])){
