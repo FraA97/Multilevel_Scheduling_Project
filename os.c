@@ -140,6 +140,37 @@ int check_end(OS* os){
 	return 1;
 }
 
+void insert_waiting(OS* os, PCB* p){
+	printf("insert_waiting\n");
+	p->in_status = 0;
+	if(p->priority_level<0 || p->priority_level>3){
+		printf("errore in insert_waiting\n");
+		return;
+	}
+	pushBack(os->waiting[p->priority_level],(ListElem*) p);
+	printf("process %d in waiting %d\n",p->pid,p->priority_level);
+}
+
+void new_arrivals(OS* os){
+	if(!isEmpty(os->toArrive)){
+		PCB* aux = (PCB*)os->toArrive->head;
+		PCB* next = (PCB*)aux->list.next;
+		while(aux){
+			
+			if(aux->arrival_time == os->step){
+				printf("process %d has arrived at the %d step\n",aux->pid, os->step);
+				detach(os->toArrive,(ListElem*) aux);
+				insert_waiting(os,aux);
+			}
+			aux = next;
+			if(aux == NULL)
+				return;
+			next = (PCB*)next->list.next;
+		}
+	}
+}
+
+
 void io(OS* os){
 	if(!isEmpty(os->IO)){
 		printf("io\n");
@@ -223,4 +254,38 @@ int get_next_running(OS*os){
 		}
 	}
 	return 0;
+}
+
+int burst_end(OS*os){
+	printf("burst has ended\n");
+	pop(os->running->events);
+		if(!isEmpty(os->running->events)){ //the process has still some bursts to be done => we put it in IO queue
+			PCB * toIO = os->running;
+			toIO->in_status = 0;
+			pushBack(os->IO, (ListElem*)toIO);
+			os->running = NULL;
+			printf("proces %d in IO\n",toIO->pid);
+		}
+		else{ //the process has ended
+			PCB* ended = os->running;
+			os->running = NULL;
+			printf("process %d has ended\n",ended->pid );
+			PCB_free(ended);
+		}
+		return get_next_running(os);
+}
+
+int quantum_end(OS * os){ //we have to put the running process in a lower priority waiting list
+	printf("quantum has ended\n");
+	PCB * toWaiting = (PCB*)os->running;
+	os->running = NULL;
+	if(toWaiting->priority_level<3)
+		toWaiting->priority_level ++;
+	//we have to "take out" the part of the burst that has been consumed
+	Event* ev = (Event*)toWaiting->events->head;
+	ev->duration -= os->q;
+	toWaiting->in_status = 0;
+	insert_waiting(os, toWaiting);
+	//we get a new running process
+	return get_next_running(os);
 }
