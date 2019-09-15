@@ -86,3 +86,14 @@ int pushBack(ListHead* list, ListElem* elem){
 int isEmpty(ListHead* list){
 	return list->lenght==0;
 }
+
+void List_free(ListHead* head){
+	int l = head->lenght;
+	if(l >0){
+		printf("non si può fare free su una lista non vuota\n");
+		return;
+	}
+	free(head->head);
+	free(head->tail);
+	free(head);
+}

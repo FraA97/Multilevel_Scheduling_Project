@@ -4,11 +4,14 @@ PCB * PCB_init(){
 	PCB* pcb = (PCB*) malloc(sizeof(PCB));
 	pcb->pid = pcb->arrival_time = pcb->priority_level = pcb->in_status = -1;
 	pcb->events = List_init();
+
+	pcb->list.next = pcb->list.prev = NULL;
 	return pcb;
 }
 
 Event * Event_create(Resource r, int d){
 	Event* e = (Event*) malloc(sizeof(Event));
+	e->list.next = e->list.prev = NULL;
 	e->res = r;
 	e->duration = d;
 	return e;
@@ -25,8 +28,8 @@ PCB* Process_create(const char* filename){
 	PCB * p = PCB_init();
 	size_t buff_size = 10;
 	char* buff = (char*)malloc(sizeof(char)*buff_size);
-	size_t line_lenght;
-	while(getline(&buff,&line_lenght,f) >=0){
+	size_t line_lenght = 0;
+	while(getline(&buff,&line_lenght,f) >0){
 		int pid = -1;
 		int arrival_time = -1;
 		int priority_level = -1;
@@ -104,13 +107,11 @@ void Event_print(Event* e,FILE* f){
 
 void Event_list_print(ListHead* list,FILE* f){
 	Event * e = (Event*) list->head;
-	for(int i=0; i < list->lenght; ++i) {
+	while(e!= NULL) {
 		Event_print(e,f);
 		fprintf(f, "\n");
 		e = (Event*)e->list.next;
-		if(e == NULL)
-			return;
-	}
+		}
 }
 
 
@@ -133,7 +134,7 @@ int PCB_free(PCB* p){
 		printf("ERRORE: impossibile fare free su un processo che non è terminato\n");
 		return 0;	
 	}
-	free(p->events);
+	List_free(p->events);
 	free(p);
 	return 1;
 

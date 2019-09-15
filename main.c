@@ -13,6 +13,7 @@ void main(int argc, char ** argv){
 	while(OS_step(os,f)!= 0){
 		printf("next step\n");
 	}
+	OS_free(os);
 	fclose(f);
 	printf("completato, i risultati si trovano nel file results.txt\n");
 }

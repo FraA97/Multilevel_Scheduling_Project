@@ -21,10 +21,14 @@ OS* OS_init(int argc, char ** argv,FILE* f){
 	for(int i = 0; i<4; i++)
 		os->waiting[i] = List_init();
 	return os;
-	os->running_event = NULL;
 
 }
-
+void OS_free(OS* os){
+	free(os->running);
+	free(os->IO);
+	free(os->toArrive);
+	free(os);
+}
 
 int OS_step(OS* os,FILE * f){
 	fprintf(f,"************************************************************************************\n");
@@ -152,12 +156,15 @@ void insert_waiting(OS* os, PCB* p){
 }
 
 void new_arrivals(OS* os){
+	if(os == NULL)
+		return;
 	if(!isEmpty(os->toArrive)){
 		PCB* next;
 		PCB* aux = (PCB*)os->toArrive->head;
 		int contat = os->toArrive->lenght;
 		if(aux->list.next != NULL)
 			next = (PCB*)aux->list.next;
+		else next = NULL;
 		while(contat > 0){
 			if(aux->arrival_time == os->step){
 				printf("process %d has arrived at the %d step\n",aux->pid, os->step);

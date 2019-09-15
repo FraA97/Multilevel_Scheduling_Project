@@ -21,3 +21,4 @@ ListElem* pop(ListHead* list);//take the first elem in the list
 int pushFront(ListHead* list, ListElem* elem);//insert a new elem at the head of the list
 int pushBack(ListHead* list, ListElem* elem); //insert a new elem at the end of the list
 int isEmpty(ListHead* list);
+void List_free(ListHead* head);
