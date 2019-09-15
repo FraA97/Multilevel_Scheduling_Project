@@ -93,7 +93,9 @@ void List_free(ListHead* head){
 		printf("non si può fare free su una lista non vuota\n");
 		return;
 	}
-	free(head->head);
-	free(head->tail);
+	if(head->head)
+		free(head->head);
+	if(head->tail)
+		free(head->tail);
 	free(head);
 }

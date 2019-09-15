@@ -134,7 +134,8 @@ int PCB_free(PCB* p){
 		printf("ERRORE: impossibile fare free su un processo che non è terminato\n");
 		return 0;	
 	}
-	List_free(p->events);
+	if(p->events)
+		List_free(p->events);
 	free(p);
 	return 1;
 

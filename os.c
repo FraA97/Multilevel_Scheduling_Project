@@ -185,7 +185,11 @@ void io(OS* os){
 	if(!isEmpty(os->IO)){
 		printf("io\n");
 		PCB* aux = (PCB*)os->IO->head;
-		PCB* next = (PCB*) aux->list.next;
+		PCB* next ;
+		if(aux->list.next != NULL )
+			next = (PCB*) aux->list.next;
+		else 
+			next = NULL;
 		while(aux){
 			printf("%d in IO for %d\n",aux->pid,aux->in_status);
 			Event * e = (Event*)aux->events->head;
@@ -193,9 +197,9 @@ void io(OS* os){
 			if(aux->in_status == e->duration){ //if its burst has ended
 				printf("proces %d has ended its io burst\n",aux->pid);
 				e = (Event*)pop(aux->events);
-				Event_free(e);
+				
 
-				if(!isEmpty(aux->events)){ //the process still has some bursts to be done
+				if(aux->events->lenght >1){ //the process still has some bursts to be done
 					PCB* toWaiting = (PCB*) detach(os->IO,(ListElem*) aux);
 					insert_waiting(os, toWaiting);
 
@@ -208,12 +212,14 @@ void io(OS* os){
 				}
 
 			}
-
-			aux->in_status++;
-			aux = next;
-			if(aux == NULL)
+			else
+				aux->in_status++;
+			if(next != NULL){
+				aux = next;
+				next =(PCB*) next->list.next;
+			}
+			else
 				return;
-			next =(PCB*) next->list.next;
 		}
 
 	}
