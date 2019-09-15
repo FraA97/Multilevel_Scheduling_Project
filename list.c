@@ -88,14 +88,6 @@ int isEmpty(ListHead* list){
 }
 
 void List_free(ListHead* head){
-	int l = head->lenght;
-	if(l >0){
-		printf("non si può fare free su una lista non vuota\n");
-		return;
-	}
-	if(head->head)
-		free(head->head);
-	if(head->tail)
-		free(head->tail);
+
 	free(head);
 }

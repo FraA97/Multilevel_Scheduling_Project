@@ -63,8 +63,7 @@ PCB* Process_create(const char* filename){
 		Next:
 		;
 	}
-	if(buff)
-		free(buff);
+	free(buff);
 	fclose(f);
 	return p;
 }
@@ -130,12 +129,7 @@ int PCB_free(PCB* p){
 		printf("ERRORE: impossibile fare free su un processo che si trova in una lista\n");
 		return 0;
 	}
-	if(! isEmpty(p->events)){
-		printf("ERRORE: impossibile fare free su un processo che non è terminato\n");
-		return 0;	
-	}
-	if(p->events)
-		List_free(p->events);
+	List_free(p->events);
 	free(p);
 	return 1;
 

@@ -25,8 +25,12 @@ OS* OS_init(int argc, char ** argv,FILE* f){
 }
 void OS_free(OS* os){
 	free(os->running);
-	free(os->IO);
-	free(os->toArrive);
+	List_free(os->IO);
+	List_free(os->toArrive);
+	List_free(os->waiting[0]);
+	List_free(os->waiting[1]);
+	List_free(os->waiting[2]);
+	List_free(os->waiting[3]);
 	free(os);
 }
 
@@ -85,10 +89,10 @@ int OS_step(OS* os,FILE * f){
 		
 	}
 	//manage the waiting lists
-	waiting(os); //TODO
+	waiting(os); 
 
 	// manage the IO
-	io(os); //TODO
+	io(os); 
 
 	return 1;
 }
@@ -185,7 +189,7 @@ void io(OS* os){
 	if(!isEmpty(os->IO)){
 		printf("io\n");
 		PCB* aux = (PCB*)os->IO->head;
-		PCB* next ;
+		PCB* next; 
 		if(aux->list.next != NULL )
 			next = (PCB*) aux->list.next;
 		else 
@@ -197,8 +201,7 @@ void io(OS* os){
 			if(aux->in_status == e->duration){ //if its burst has ended
 				printf("proces %d has ended its io burst\n",aux->pid);
 				e = (Event*)pop(aux->events);
-				
-
+				Event_free(e);
 				if(aux->events->lenght >1){ //the process still has some bursts to be done
 					PCB* toWaiting = (PCB*) detach(os->IO,(ListElem*) aux);
 					insert_waiting(os, toWaiting);
@@ -274,7 +277,8 @@ int get_next_running(OS*os){
 
 int burst_end(OS*os){
 	printf("burst has ended\n");
-	pop(os->running->events);
+	Event* e = (Event*)pop(os->running->events);
+	Event_free(e);
 		if(!isEmpty(os->running->events)){ //the process has still some bursts to be done => we put it in IO queue
 			PCB * toIO = os->running;
 			toIO->in_status = 0;
