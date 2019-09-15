@@ -14,9 +14,10 @@ OS* OS_init(int argc, char ** argv,FILE* f){
 		PCB * p = Process_create(argv[j]);
 		pushBack(os->toArrive,(ListElem*)p);
 		fprintf(f,"creato processo da %s\n",argv[j]);
-		PCB_print_info(p,f);
+		PCB_print_info(p,stdout);
 		fprintf(f,"\n");
 	}
+	printf("created all process\n");
 	for(int i = 0; i<4; i++)
 		os->waiting[i] = List_init();
 	return os;
@@ -38,8 +39,7 @@ int OS_step(OS* os,FILE * f){
 	}
 
 	//check for new process
-	new_arrivals(os); //TODO
-	
+	new_arrivals(os); 
 
 	//check running process
 	if(os->running == NULL ){
@@ -153,10 +153,12 @@ void insert_waiting(OS* os, PCB* p){
 
 void new_arrivals(OS* os){
 	if(!isEmpty(os->toArrive)){
+		PCB* next;
 		PCB* aux = (PCB*)os->toArrive->head;
-		PCB* next = (PCB*)aux->list.next;
-		while(aux){
-			
+		int contat = os->toArrive->lenght;
+		if(aux->list.next != NULL)
+			next = (PCB*)aux->list.next;
+		while(contat > 0){
 			if(aux->arrival_time == os->step){
 				printf("process %d has arrived at the %d step\n",aux->pid, os->step);
 				detach(os->toArrive,(ListElem*) aux);
@@ -166,6 +168,7 @@ void new_arrivals(OS* os){
 			if(aux == NULL)
 				return;
 			next = (PCB*)next->list.next;
+			contat--;
 		}
 	}
 }

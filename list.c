@@ -70,9 +70,10 @@ int pushFront(ListHead* list, ListElem* elem){
 
 int pushBack(ListHead* list, ListElem* elem){
 	ListElem* tail = list->tail;
-	if(tail == NULL){
+	if(isEmpty(list)){
 		list->head = elem;
 		list->tail = elem;
+		list->lenght =1;
 		return 1;
 	}
 	tail->next = elem;

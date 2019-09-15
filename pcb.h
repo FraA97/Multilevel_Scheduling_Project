@@ -25,6 +25,10 @@ Event* Event_create(Resource r, int d);
 PCB* Process_create(const char* filename); //creates a pcb
 
 void PCB_print_info(PCB* pcb, FILE* f);
-void PCB_list_print(ListHead* list, FILE* f);
+void PCB_list_print_info(ListHead* list, FILE* f);
 void Event_print(Event* e,FILE* f);
 void Event_list_print(ListHead* list,FILE* f);
+
+
+int Event_free(Event* e);
+int PCB_free(PCB* p);
