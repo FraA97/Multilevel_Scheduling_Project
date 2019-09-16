@@ -129,6 +129,7 @@ int PCB_free(PCB* p){
 		printf("ERRORE: impossibile fare free su un processo che si trova in una lista\n");
 		return 0;
 	}
+
 	List_free(p->events);
 	free(p);
 	return 1;

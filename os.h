@@ -9,7 +9,7 @@ typedef struct os{
 	int q; // max time for the process what is actualy running
 	ListHead* IO; //list of processes currently in an IO status
 	ListHead* toArrive; //list of processes that shoud still arrive in the os
-	ListHead* waiting[4]; //arry of lists of processes in witing status
+	ListHead* waiting[4]; //array of lists of processes in witing status
 }OS;
 
 

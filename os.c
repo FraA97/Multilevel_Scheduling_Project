@@ -70,13 +70,13 @@ int OS_step(OS* os,FILE * f){
 		printf("running has a burst %d long\n",e->duration);
 
 	 	if(os->running->in_status >= os->q){
-	 		if(quantum_end(os)==0) //TODO
+	 		if(quantum_end(os)==0)
 				printf("no process running\n");
 			else printf("got next running\n");
 		}
 
 	 	else if( os->running->in_status >= e->duration){
-			if(burst_end(os)== 0) //TODO
+			if(burst_end(os)== 0) 
 				printf("no process running\n");
 			else {
 				os->running->in_status = 0;
@@ -202,7 +202,7 @@ void io(OS* os){
 				printf("proces %d has ended its io burst\n",aux->pid);
 				e = (Event*)pop(aux->events);
 				Event_free(e);
-				if(aux->events->lenght >1){ //the process still has some bursts to be done
+				if(aux->events->lenght >0){ //the process still has some bursts to be done
 					PCB* toWaiting = (PCB*) detach(os->IO,(ListElem*) aux);
 					insert_waiting(os, toWaiting);
 
