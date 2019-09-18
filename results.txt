@@ -1,0 +1,361 @@
+creato processo da try1.txt
+
+creato processo da try2.txt
+
+creato processo da try3.txt
+
+************************************************************************************
+STEP: -1 
+NO PROCESS RUNNING
+NO PROCESS IN WAITING LIST 0
+NO PROCESS IN WAITING LIST 1
+NO PROCESS IN WAITING LIST 2
+NO PROCESS IN WAITING LIST 3
+NO PROCESS IN IO LIST 
+YET TO ARRIVE:
+pid: 1
+arrival_time: 0
+priority_level: 0
+
+EVENTI:
+CPU for 5
+
+IO for 1
+
+CPU for 1
+
+in status: -1
+
+pid: 2
+arrival_time: 0
+priority_level: 1
+
+EVENTI:
+CPU for 3
+
+IO for 4
+
+in status: -1
+
+pid: 3
+arrival_time: 4
+priority_level: 2
+
+EVENTI:
+CPU for 2
+
+IO for 2
+
+CPU for 2
+
+IO for 2
+
+in status: -1
+
+************************************************************************************
+STEP: 0 
+RUNNING:
+pid: 1
+arrival_time: 0
+priority_level: 0
+
+EVENTI:
+CPU for 5
+
+IO for 1
+
+CPU for 1
+
+in status: 0
+q: 4
+NO PROCESS IN WAITING LIST 0
+WAITING 1
+pid: 2
+arrival_time: 0
+priority_level: 1
+
+EVENTI:
+CPU for 3
+
+IO for 4
+
+in status: 1
+
+NO PROCESS IN WAITING LIST 2
+NO PROCESS IN WAITING LIST 3
+NO PROCESS IN IO LIST 
+YET TO ARRIVE:
+pid: 3
+arrival_time: 4
+priority_level: 2
+
+EVENTI:
+CPU for 2
+
+IO for 2
+
+CPU for 2
+
+IO for 2
+
+in status: -1
+
+************************************************************************************
+STEP: 1 
+RUNNING:
+pid: 1
+arrival_time: 0
+priority_level: 0
+
+EVENTI:
+CPU for 5
+
+IO for 1
+
+CPU for 1
+
+in status: 1
+q: 4
+NO PROCESS IN WAITING LIST 0
+WAITING 1
+pid: 2
+arrival_time: 0
+priority_level: 1
+
+EVENTI:
+CPU for 3
+
+IO for 4
+
+in status: 2
+
+NO PROCESS IN WAITING LIST 2
+NO PROCESS IN WAITING LIST 3
+NO PROCESS IN IO LIST 
+YET TO ARRIVE:
+pid: 3
+arrival_time: 4
+priority_level: 2
+
+EVENTI:
+CPU for 2
+
+IO for 2
+
+CPU for 2
+
+IO for 2
+
+in status: -1
+
+************************************************************************************
+STEP: 2 
+RUNNING:
+pid: 1
+arrival_time: 0
+priority_level: 0
+
+EVENTI:
+CPU for 5
+
+IO for 1
+
+CPU for 1
+
+in status: 2
+q: 4
+NO PROCESS IN WAITING LIST 0
+WAITING 1
+pid: 2
+arrival_time: 0
+priority_level: 1
+
+EVENTI:
+CPU for 3
+
+IO for 4
+
+in status: 3
+
+NO PROCESS IN WAITING LIST 2
+NO PROCESS IN WAITING LIST 3
+NO PROCESS IN IO LIST 
+YET TO ARRIVE:
+pid: 3
+arrival_time: 4
+priority_level: 2
+
+EVENTI:
+CPU for 2
+
+IO for 2
+
+CPU for 2
+
+IO for 2
+
+in status: -1
+
+************************************************************************************
+STEP: 3 
+RUNNING:
+pid: 1
+arrival_time: 0
+priority_level: 0
+
+EVENTI:
+CPU for 5
+
+IO for 1
+
+CPU for 1
+
+in status: 3
+q: 4
+NO PROCESS IN WAITING LIST 0
+WAITING 1
+pid: 2
+arrival_time: 0
+priority_level: 1
+
+EVENTI:
+CPU for 3
+
+IO for 4
+
+in status: 4
+
+NO PROCESS IN WAITING LIST 2
+NO PROCESS IN WAITING LIST 3
+NO PROCESS IN IO LIST 
+YET TO ARRIVE:
+pid: 3
+arrival_time: 4
+priority_level: 2
+
+EVENTI:
+CPU for 2
+
+IO for 2
+
+CPU for 2
+
+IO for 2
+
+in status: -1
+
+************************************************************************************
+STEP: 4 
+RUNNING:
+pid: 2
+arrival_time: 0
+priority_level: 1
+
+EVENTI:
+CPU for 3
+
+IO for 4
+
+in status: 4
+q: 8
+NO PROCESS IN WAITING LIST 0
+WAITING 1
+pid: 1
+arrival_time: 0
+priority_level: 1
+
+EVENTI:
+CPU for 1
+
+IO for 1
+
+CPU for 1
+
+in status: 1
+
+WAITING 2
+pid: 3
+arrival_time: 4
+priority_level: 2
+
+EVENTI:
+CPU for 2
+
+IO for 2
+
+CPU for 2
+
+IO for 2
+
+in status: 0
+
+NO PROCESS IN WAITING LIST 3
+NO PROCESS IN IO LIST 
+ALL PROCESSES HAVE ARRIVED 
+************************************************************************************
+STEP: 5 
+RUNNING:
+pid: 1
+arrival_time: 0
+priority_level: 1
+
+EVENTI:
+CPU for 1
+
+IO for 1
+
+CPU for 1
+
+in status: 0
+q: 8
+NO PROCESS IN WAITING LIST 0
+NO PROCESS IN WAITING LIST 1
+WAITING 2
+pid: 3
+arrival_time: 4
+priority_level: 2
+
+EVENTI:
+CPU for 2
+
+IO for 2
+
+CPU for 2
+
+IO for 2
+
+in status: 1
+
+NO PROCESS IN WAITING LIST 3
+IO:
+pid: 2
+arrival_time: 0
+priority_level: 1
+
+EVENTI:
+IO for 4
+
+in status: 1
+
+ALL PROCESSES HAVE ARRIVED 
+************************************************************************************
+STEP: 6 
+RUNNING:
+pid: 3
+arrival_time: 4
+priority_level: 2
+
+EVENTI:
+CPU for 2
+
+IO for 2
+
+CPU for 2
+
+IO for 2
+
+in status: 0
+q: 16
+NO PROCESS IN WAITING LIST 0
+NO PROCESS IN WAITING LIST 1
+NO PROCESS IN WAITING LI

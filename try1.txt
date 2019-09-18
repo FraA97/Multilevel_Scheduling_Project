@@ -1,4 +1,4 @@
 PROCESS 1 0 0
-CPU 2
+CPU 5
 IO 1
 CPU 1

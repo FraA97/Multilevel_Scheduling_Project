@@ -75,7 +75,7 @@ void PCB_print_info(PCB* pcb, FILE* f){
 	fprintf(f,"arrival_time: %d\n",pcb->arrival_time);
 	fprintf(f,"priority_level: %d\n",pcb->priority_level);
 	if(!isEmpty(pcb->events)){
-		fprintf(f, "EVENTI:\n" );
+		fprintf(f, "\nEVENTI:\n" );
 		Event_list_print(pcb->events,f);
 	}
 

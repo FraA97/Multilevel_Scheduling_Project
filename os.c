@@ -267,7 +267,7 @@ int get_next_running(OS*os){
 		if(!isEmpty(os->waiting[i])){
 			PCB* next = (PCB*)pop(os->waiting[i]);
 			next->in_status == 0;
-			os->q = max_waiting[i];
+			os->q = quantus[i];
 			os->running = next;
 			return 1;
 		}
